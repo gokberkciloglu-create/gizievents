@@ -1,116 +1,88 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>gizi events</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>gizi events</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  font-family: "Cormorant Garamond", serif;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #e6edf5;
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: "Cormorant Garamond", serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-  /* ANA KADİFE RENK */
-  background: #2f3f54;
-}
+      /* ARKA PLAN */
+      background-image: url("fur-bg.png");
+      background-size: cover;
+      background-position: center;
+    }
 
-/* KADİFE TABANI */
-.velvet {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% 50%, #5c6f88, #2f3f54 60%);
-  mix-blend-mode: soft-light;
-  pointer-events: none;
-}
+    /* ÜST IŞIK */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 40%);
+      pointer-events: none;
+    }
 
-/* IŞIK HAREKETİ */
-.light {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25), transparent 25%);
-  mix-blend-mode: overlay;
-  transition: 0.1s;
-}
+    /* BALON */
+    .bubble {
+      position: absolute;
+      top: 28%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 20px 50px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+      font-size: 26px;
+      transition: 0.3s;
+    }
 
-/* BALON */
-.bubble {
-  position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
-  padding: 20px 50px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.25);
-  transition: 0.3s;
-}
+    .bubble:hover {
+      transform: translateX(-50%) scale(1.05);
+    }
 
-.bubble:hover {
-  transform: translateY(-50%) scale(1.08);
-}
+    /* ALT LOGO */
+    .footer {
+      position: absolute;
+      bottom: 60px;
+      text-align: center;
+      width: 100%;
+    }
 
-.bubble-text {
-  font-size: 24px;
-}
+    .footer h1 {
+      font-size: 80px;
+      margin: 0;
+      text-shadow: 0 10px 30px rgba(255,255,255,0.3);
+    }
 
-/* ALT LOGO */
-.footer {
-  position: absolute;
-  bottom: 40px;
-  text-align: center;
-  width: 100%;
-}
-
-.footer h1 {
-  font-size: 48px;
-  margin: 0;
-}
-
-.footer p {
-  margin: 0;
-  font-size: 14px;
-  letter-spacing: 2px;
-  opacity: 0.6;
-}
-</style>
+    .footer p {
+      margin: 0;
+      font-size: 22px;
+      opacity: 0.8;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="velvet"></div>
-<div class="light" id="light"></div>
-
 <div class="bubble">
-  <div class="bubble-text">Gamze’s Bachelorette Weekend</div>
+  Gamze’s Bachelorette Weekend
 </div>
 
 <div class="footer">
   <h1>gizi</h1>
   <p>events & more</p>
 </div>
-
-<script>
-const light = document.getElementById("light");
-
-document.addEventListener("mousemove", (e) => {
-  let x = (e.clientX / window.innerWidth) * 100;
-  let y = (e.clientY / window.innerHeight) * 100;
-
-  light.style.background =
-    `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.25), transparent 25%)`;
-});
-</script>
 
 </body>
 </html>
