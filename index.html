@@ -1,100 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>gizi events</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gizi events</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
-      background: radial-gradient(circle at 30% 30%, #6e7f96, #3e4b5c);
-      overflow-x: hidden;
-      color: #dfe6ed;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 
-    .velvet {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent);
-      mix-blend-mode: overlay;
-      pointer-events: none;
-      transition: 0.2s;
-    }
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: "Cormorant Garamond", serif;
+  background: linear-gradient(135deg, #6f8096, #4b5c73);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: #e6edf5;
+}
 
-    .hero {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-    }
+/* kadife hissi */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), transparent 40%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
 
-    .logo {
-      font-size: 90px;
-      letter-spacing: 8px;
-      color: #cfd7df;
-      text-shadow:
-        inset 0 2px 4px rgba(0,0,0,0.4),
-        0 6px 12px rgba(0,0,0,0.4);
-      opacity: 0.9;
-    }
+/* baloncuk */
+.bubble {
+  padding: 18px 40px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    .sub {
-      font-size: 16px;
-      letter-spacing: 4px;
-      opacity: 0.6;
-    }
+.bubble:hover {
+  transform: scale(1.08);
+  background: rgba(255,255,255,0.15);
+}
 
-    .section {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.bubble-text {
+  font-size: 22px;
+  letter-spacing: 1px;
+}
 
-    .card {
-      background: rgba(255,255,255,0.05);
-      padding: 20px 40px;
-      border-radius: 40px;
-      backdrop-filter: blur(10px);
-      transition: 0.3s;
-      cursor: pointer;
-    }
+/* alt logo */
+.footer {
+  position: absolute;
+  bottom: 40px;
+  text-align: center;
+  width: 100%;
+}
 
-    .card:hover {
-      transform: scale(1.05);
-      background: rgba(255,255,255,0.1);
-    }
-  </style>
+.footer h1 {
+  font-size: 42px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 2px;
+  opacity: 0.6;
+}
+</style>
 </head>
 
 <body>
 
-<div class="velvet" id="velvet"></div>
+<div class="bubble">
+  <div class="bubble-text">Gamze’s Bachelorette Weekend</div>
+</div>
 
-<section class="hero">
-  <div class="logo">gizi</div>
-  <div class="sub">events & more</div>
-</section>
-
-<section class="section">
-  <div class="card">Gamze's Bachelorette</div>
-</section>
-
-<script>
-  const velvet = document.getElementById("velvet");
-
-  document.addEventListener("mousemove", (e) => {
-    let x = e.clientX / window.innerWidth * 100;
-    let y = e.clientY / window.innerHeight * 100;
-
-    velvet.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.15), transparent)`;
-  });
-</script>
+<div class="footer">
+  <h1>gizi</h1>
+  <p>events & more</p>
+</div>
 
 </body>
 </html>
