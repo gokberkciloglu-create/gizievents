@@ -18,59 +18,26 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url("bg-desktop.png") center/cover no-repeat;
   -webkit-tap-highlight-color: transparent;
-  background: url("bg-desktop.png") center center / cover no-repeat;
 }
 
+/* BALON */
 .bubble {
   padding: 16px 38px;
   border-radius: 999px;
   background: rgba(255,255,255,0.10);
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255,255,255,0.25);
-  color: rgba(30, 42, 68, 0.9);
+  color: rgba(30,42,68,0.9);
   font-size: 24px;
-  text-align: center;
-  box-shadow:
-    0 8px 25px rgba(0,0,0,0.08),
-    0 2px 8px rgba(0,0,0,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.25);
-  transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
-  user-select: none;
-  -webkit-user-select: none;
+  cursor: pointer;
 }
 
-/* Desktop hover */
-@media (hover: hover) {
-  .bubble:hover {
-    transform: scale(1.04);
-    background: rgba(255,255,255,0.14);
-    box-shadow:
-      0 12px 35px rgba(0,0,0,0.12),
-      0 4px 12px rgba(0,0,0,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.3);
-  }
-}
-
-/* Mobil ve dokunmatik cihazlar için tap efekti */
-.bubble:active {
-  transform: scale(0.97);
-  background: rgba(255,255,255,0.16);
-  border-color: rgba(255,255,255,0.34);
-  box-shadow:
-    0 6px 18px rgba(0,0,0,0.10),
-    0 2px 6px rgba(0,0,0,0.06),
-    inset 0 1px 0 rgba(255,255,255,0.32);
-}
-
+/* 📱 MOBILE */
 @media (max-width: 768px) {
   body {
-    background: url("bg-mobile.png") center center / cover no-repeat;
+    background: url("bg-mobile.png") center/cover no-repeat;
     align-items: flex-start;
     padding-top: 26vh;
   }
@@ -81,19 +48,82 @@ body {
     max-width: 82%;
     background: rgba(255,255,255,0.07);
   }
+}
 
-  .bubble:active {
-    background: rgba(255,255,255,0.13);
-  }
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 280px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="bubble">
+<div class="bubble" onclick="openModal()">
   Gamze’s Bachelorette Weekend
 </div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Şifre Gir</h3>
+    <input type="password" id="password" placeholder="Şifre">
+    <button onclick="checkPassword()">Giriş</button>
+    <div class="error" id="error"></div>
+  </div>
+</div>
+
+<script>
+function openModal() {
+  document.getElementById("modal").style.display = "flex";
+}
+
+function checkPassword() {
+  const pass = document.getElementById("password").value;
+
+  if (pass === "gamze123") {
+    window.location.href = "gamze.html";
+  } else {
+    document.getElementById("error").innerText = "Yanlış şifre";
+  }
+}
+</script>
 
 </body>
 </html>
