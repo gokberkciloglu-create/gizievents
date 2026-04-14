@@ -12,39 +12,53 @@ body {
   margin: 0;
   height: 100vh;
   font-family: "Cormorant Garamond", serif;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("bg-desktop.png") center/cover no-repeat;
+
+  /* DESKTOP ARKA PLAN */
+  background: url("bg-desktop.png") center bottom / contain no-repeat;
+  background-color: #dbe6f5;
 }
 
 /* BALON */
 .bubble {
   padding: 16px 38px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.20); /* %20 şeffaflık */
+  background: rgba(255,255,255,0.20);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,0.35);
   color: white;
   font-size: 24px;
+  text-align: center;
   transition: 0.3s;
 }
 
-/* MOBİL */
+/* HOVER (sadece bilgisayar) */
+@media (hover: hover) {
+  .bubble:hover {
+    transform: scale(1.05);
+    background: rgba(255,255,255,0.30);
+  }
+}
+
+/* 📱 MOBILE */
 @media (max-width: 768px) {
 
   body {
-    background: url("bg-mobile.png") center/cover no-repeat;
+    background: url("bg-mobile.png") center bottom / contain no-repeat;
+    background-color: #dbe6f5;
+
     align-items: flex-start;
     padding-top: 28vh;
   }
 
   .bubble {
     font-size: 22px;
-    padding: 14px 24px; /* biraz küçüldü */
+    padding: 14px 24px;
     max-width: 85%;
-    text-align: center;
-    background: rgba(255,255,255,0.16); /* daha şeffaf */
+    background: rgba(255,255,255,0.16);
   }
 }
 </style>
