@@ -23,26 +23,26 @@ body {
   background: url("bg-desktop.png") center center / cover no-repeat;
 }
 
-/* 💎 BALON (FINAL) */
+/* 💎 BALON (FINAL CAM EFFECT) */
 .bubble {
   padding: 16px 38px;
   border-radius: 999px;
 
-  /* ŞEFFAFLIK */
-  background: rgba(255,255,255,0.14);
+  /* %30 DAHA ŞEFFAF */
+  background: rgba(255,255,255,0.10);
 
-  /* CAM EFEKTİ */
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 
   border: 1px solid rgba(255,255,255,0.25);
 
-  /* YAZI */
+  /* LACİVERT YAZI */
   color: rgba(30, 42, 68, 0.9);
+
   font-size: 24px;
   text-align: center;
 
-  /* GÖLGE */
+  /* LÜKS GÖLGE */
   box-shadow:
     0 8px 25px rgba(0,0,0,0.08),
     0 2px 8px rgba(0,0,0,0.05),
@@ -51,11 +51,11 @@ body {
   transition: 0.3s;
 }
 
-/* 💻 HOVER (desktop only) */
+/* 💻 HOVER (sadece desktop) */
 @media (hover: hover) {
   .bubble:hover {
     transform: scale(1.04);
-    background: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.14);
 
     box-shadow:
       0 12px 35px rgba(0,0,0,0.12),
@@ -78,8 +78,8 @@ body {
     padding: 14px 24px;
     max-width: 82%;
 
-    /* DAHA ŞEFFAF */
-    background: rgba(255,255,255,0.10);
+    /* MOBİLDE DAHA ŞEFFAF */
+    background: rgba(255,255,255,0.07);
   }
 }
 </style>
