@@ -5,84 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>gizi events</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
   height: 100vh;
   font-family: "Cormorant Garamond", serif;
-  overflow: hidden;
-  background-image: url("fur-bg.png");
-  background-size: cover;
-  background-position: center;
-}
-
-/* ARKA DEV GIZI */
-.bg-text {
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 300px;
-  color: rgba(255,255,255,0.25);
-  pointer-events: none;
+  background: url("fur-bg.png") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* BALON */
 .bubble {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 18px 45px;
+  padding: 18px 42px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.25);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,0.4);
-  font-size: 22px;
   color: white;
-  z-index: 2;
+  font-size: 24px;
+  text-align: center;
   transition: 0.3s;
 }
 
 .bubble:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-/* ALT LOGO */
-.footer {
-  position: absolute;
-  bottom: 60px;
-  width: 100%;
-  text-align: center;
-  color: white;
-}
-
-.footer h1 {
-  margin: 0;
-  font-size: 60px;
-}
-
-.footer p {
-  margin: 0;
-  font-size: 20px;
-  opacity: 0.8;
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.35);
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-text">gizi</div>
-
 <div class="bubble">
   Gamze’s Bachelorette Weekend
-</div>
-
-<div class="footer">
-  <h1>gizi</h1>
-  <p>events & more</p>
 </div>
 
 </body>
