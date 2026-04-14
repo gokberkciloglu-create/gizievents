@@ -19,35 +19,37 @@ body {
   justify-content: center;
   align-items: center;
   background: url("bg-desktop.png") center/cover no-repeat;
-  -webkit-tap-highlight-color: transparent;
 }
 
 /* BALON */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .bubble {
-  padding: 16px 38px;
+  padding: 14px 28px;
   border-radius: 999px;
   background: rgba(255,255,255,0.10);
   backdrop-filter: blur(14px);
   border: 1px solid rgba(255,255,255,0.25);
   color: rgba(30,42,68,0.9);
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
+  text-align: center;
+
+  box-shadow:
+    0 8px 25px rgba(0,0,0,0.08),
+    0 2px 8px rgba(0,0,0,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+
+  transition: 0.3s;
 }
 
-/* 📱 MOBILE */
-@media (max-width: 768px) {
-  body {
-    background: url("bg-mobile.png") center/cover no-repeat;
-    align-items: flex-start;
-    padding-top: 26vh;
-  }
-
-  .bubble {
-    font-size: 22px;
-    padding: 14px 24px;
-    max-width: 82%;
-    background: rgba(255,255,255,0.07);
-  }
+.bubble:hover {
+  transform: scale(1.04);
+  background: rgba(255,255,255,0.14);
 }
 
 /* MODAL */
@@ -61,12 +63,22 @@ body {
 }
 
 .modal-content {
+  position: relative;
   background: rgba(255,255,255,0.15);
   backdrop-filter: blur(20px);
   padding: 30px;
   border-radius: 20px;
   text-align: center;
   width: 280px;
+}
+
+/* ❌ KAPAT */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 input {
@@ -95,30 +107,46 @@ button {
 
 <body>
 
-<div class="bubble" onclick="openModal()">
-  Gamze’s Bachelorette Weekend
+<div class="container">
+  <div class="bubble" onclick="openModal('gamze.html','gamze123')">Gamze’s Bachelorette</div>
+  <div class="bubble" onclick="openModal('zeynep.html','Ilovegoko123')">Zeynep’s Bridal Shower</div>
+  <div class="bubble" onclick="openModal('elif.html','Ilovegoko123')">Elif’s Engagement Party</div>
+  <div class="bubble" onclick="openModal('ayse.html','Ilovegoko123')">Ayşe’s Henna Night</div>
+  <div class="bubble" onclick="openModal('derya.html','Ilovegoko123')">Derya’s Welcome Party</div>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-content">
+    <div class="close" onclick="closeModal()">✕</div>
     <h3>Şifre Gir</h3>
-    <input type="password" id="password" placeholder="Şifre">
+    <input type="password" id="password">
     <button onclick="checkPassword()">Giriş</button>
     <div class="error" id="error"></div>
   </div>
 </div>
 
 <script>
-function openModal() {
+let currentPage = "";
+let currentPassword = "";
+
+function openModal(page, password) {
+  currentPage = page;
+  currentPassword = password;
   document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("password").value = "";
+  document.getElementById("error").innerText = "";
 }
 
 function checkPassword() {
   const pass = document.getElementById("password").value;
 
-  if (pass === "gamze123") {
-    window.location.href = "gamze.html";
+  if (pass === currentPassword) {
+    window.location.href = currentPage;
   } else {
     document.getElementById("error").innerText = "Yanlış şifre";
   }
