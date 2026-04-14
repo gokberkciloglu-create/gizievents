@@ -12,44 +12,39 @@ body {
   margin: 0;
   height: 100vh;
   font-family: "Cormorant Garamond", serif;
-  background: url("fur-bg.png") center/cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url("bg-desktop.png") center/cover no-repeat;
 }
 
 /* BALON */
 .bubble {
-  padding: 18px 42px;
+  padding: 16px 38px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.20); /* %20 şeffaflık */
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.35);
   color: white;
   font-size: 24px;
-  text-align: center;
   transition: 0.3s;
 }
 
-/* HOVER sadece desktop */
-@media (hover: hover) {
-  .bubble:hover {
-    transform: scale(1.05);
-    background: rgba(255,255,255,0.35);
-  }
-}
-
-/* 📱 MOBİL AYAR */
+/* MOBİL */
 @media (max-width: 768px) {
+
   body {
+    background: url("bg-mobile.png") center/cover no-repeat;
     align-items: flex-start;
-    padding-top: 30vh;
+    padding-top: 28vh;
   }
 
   .bubble {
-    font-size: 20px;
-    padding: 16px 22px;
+    font-size: 22px;
+    padding: 14px 24px; /* biraz küçüldü */
     max-width: 85%;
+    text-align: center;
+    background: rgba(255,255,255,0.16); /* daha şeffaf */
   }
 }
 </style>
