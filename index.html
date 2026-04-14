@@ -31,9 +31,26 @@ body {
   transition: 0.3s;
 }
 
-.bubble:hover {
-  transform: scale(1.05);
-  background: rgba(255,255,255,0.35);
+/* HOVER sadece desktop */
+@media (hover: hover) {
+  .bubble:hover {
+    transform: scale(1.05);
+    background: rgba(255,255,255,0.35);
+  }
+}
+
+/* 📱 MOBİL AYAR */
+@media (max-width: 768px) {
+  body {
+    align-items: flex-start;
+    padding-top: 30vh;
+  }
+
+  .bubble {
+    font-size: 20px;
+    padding: 16px 22px;
+    max-width: 85%;
+  }
 }
 </style>
 </head>
