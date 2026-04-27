@@ -18,12 +18,13 @@ html, body {
   font-family: "Cormorant Garamond", serif;
 }
 
+/* BACKGROUND */
 .bg {
   position: fixed;
   inset: 0;
   background-size: cover;
   background-position: center;
-  transition: opacity 2s ease, filter 2s ease, transform 2s ease;
+  transition: opacity 1.2s ease, filter 1.2s ease, transform 1.2s ease;
 }
 
 .bg1 {
@@ -39,6 +40,7 @@ html, body {
   transform: scale(1.05);
 }
 
+/* CONTAINER */
 .container {
   position: relative;
   z-index: 3;
@@ -61,19 +63,25 @@ html, body {
   opacity: 0;
 }
 
+/* BALON */
 .bubble {
   position: relative;
   overflow: hidden;
-  padding: 14px 28px;
+
+  width: 260px;
+  text-align: center;
+
+  padding: 14px 20px;
   border-radius: 999px;
+
   background: rgba(255,255,255,0.07);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+
   border: 1px solid rgba(255,255,255,0.25);
   color: rgba(20,30,60,0.9);
   font-size: 22px;
   cursor: pointer;
-  text-align: center;
 
   box-shadow:
     0 8px 25px rgba(0,0,0,0.08),
@@ -82,79 +90,16 @@ html, body {
 
   opacity: 0;
   transform: scale(0.7);
-  transition:
-    transform .28s ease,
-    background .28s ease,
-    box-shadow .28s ease,
-    border-color .28s ease,
-    opacity .28s ease;
 
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  transition: 0.28s;
 }
 
-/* Balon kalıcı görünür hali */
 .bubble.visible {
   opacity: 1;
   transform: scale(1);
 }
 
-/* Hover */
-@media (hover: hover) {
-  .bubble.visible:hover {
-    transform: scale(1.045);
-    background: rgba(255,255,255,0.14);
-    border-color: rgba(255,255,255,0.38);
-    box-shadow:
-      0 14px 38px rgba(0,0,0,0.12),
-      0 5px 14px rgba(0,0,0,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.35);
-  }
-}
-
-.bubble:active {
-  transform: scale(0.96);
-  background: rgba(255,255,255,0.16);
-}
-
-/* Shimmer */
-.bubble::after {
-  content: "";
-  position: absolute;
-  top: -40%;
-  left: -70%;
-  width: 55%;
-  height: 180%;
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    rgba(255,255,255,0.08) 35%,
-    rgba(255,255,255,0.45) 50%,
-    rgba(255,255,255,0.08) 65%,
-    transparent 100%
-  );
-  transform: rotate(12deg);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.bubble.shimmer::after {
-  animation: shimmer 1.35s ease forwards;
-}
-
-@keyframes shimmer {
-  0% { left: -70%; opacity: 0; }
-  18% { opacity: .75; }
-  100% { left: 120%; opacity: 0; }
-}
-
-@keyframes pop {
-  0% { transform: scale(0.7); opacity: 0; }
-  60% { transform: scale(1.08); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* Float transform'u bozmasın diye wrapper gibi hafif hareket container'a değil bubble'a translate ile veriyoruz */
+/* FLOAT */
 .bubble.float {
   animation: float 3.4s ease-in-out infinite;
 }
@@ -163,6 +108,50 @@ html, body {
   0% { margin-top: 0; }
   50% { margin-top: -6px; }
   100% { margin-top: 0; }
+}
+
+/* POP */
+@keyframes pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* SHIMMER */
+.bubble::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -70%;
+  width: 55%;
+  height: 180%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.5), transparent);
+  transform: rotate(12deg);
+  opacity: 0;
+}
+
+.bubble.shimmer::after {
+  animation: shimmer 1.2s ease;
+}
+
+@keyframes shimmer {
+  0% { left: -70%; opacity: 0; }
+  30% { opacity: .8; }
+  100% { left: 120%; opacity: 0; }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .container {
+    justify-content: flex-start;
+    padding-top: 26vh;
+  }
+
+  .bubble {
+    width: 80%;
+    max-width: 300px;
+    font-size: 20px;
+  }
 }
 
 /* MODAL */
@@ -174,95 +163,47 @@ html, body {
   display: none;
   justify-content: center;
   align-items: center;
-  opacity: 0;
-  transition: opacity .25s ease;
 }
 
 .modal.show {
-  opacity: 1;
+  display: flex;
 }
 
 .modal-content {
-  position: relative;
   background: rgba(255,255,255,0.18);
   backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  padding: 32px;
-  border-radius: 24px;
+  padding: 30px;
+  border-radius: 20px;
   text-align: center;
   width: 280px;
-  border: 1px solid rgba(255,255,255,0.24);
-  box-shadow:
-    0 18px 45px rgba(0,0,0,0.16),
-    inset 0 1px 0 rgba(255,255,255,0.28);
-  transform: scale(.92);
-  transition: transform .28s ease;
-}
-
-.modal.show .modal-content {
-  transform: scale(1);
 }
 
 .close {
   position: absolute;
-  top: 10px;
   right: 15px;
+  top: 10px;
   cursor: pointer;
-  font-size: 20px;
-  color: rgba(20,30,60,0.75);
-}
-
-.modal-content h3 {
-  margin: 0 0 12px;
-  color: rgba(20,30,60,0.9);
-  font-weight: 500;
 }
 
 input {
   width: 100%;
-  box-sizing: border-box;
-  padding: 11px 12px;
-  margin-top: 8px;
+  padding: 10px;
+  margin-top: 10px;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.32);
-  background: rgba(255,255,255,0.35);
-  outline: none;
-  color: rgba(20,30,60,0.9);
-  text-align: center;
+  border: none;
 }
 
 button {
   margin-top: 15px;
-  padding: 10px 22px;
+  padding: 10px 20px;
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  color: rgba(20,30,60,0.9);
-  background: rgba(255,255,255,0.45);
 }
 
 .error {
-  color: #8a1f2d;
-  font-size: 14px;
+  color: red;
   margin-top: 10px;
-}
-
-@media (max-width: 768px) {
-  .container {
-    justify-content: flex-start;
-    padding-top: 26vh;
-    height: calc(100% - 26vh);
-  }
-
-  .bubble {
-    font-size: 20px;
-    padding: 13px 22px;
-    max-width: 82%;
-  }
-
-  .modal-content {
-    width: min(280px, 82vw);
-  }
 }
 </style>
 </head>
@@ -294,85 +235,59 @@ button {
 let currentPage = "";
 let currentPassword = "";
 
+/* GIZI DAHA HIZLI */
 setTimeout(() => {
   const bg2 = document.querySelector(".bg2");
   bg2.style.opacity = "1";
   bg2.style.filter = "blur(0)";
   bg2.style.transform = "scale(1)";
-}, 250);
+}, 300);
 
+/* BALONLAR DAHA ERKEN */
 setTimeout(() => {
   const container = document.getElementById("container");
   const bubbles = document.querySelectorAll(".bubble");
 
   container.classList.add("show");
 
-  bubbles.forEach((bubble, index) => {
+  bubbles.forEach((b, i) => {
     setTimeout(() => {
-      bubble.style.animation = "pop 0.65s ease forwards";
+      b.style.animation = "pop 0.6s ease forwards";
 
       setTimeout(() => {
-        bubble.style.animation = "";
-        bubble.classList.add("visible");
-        bubble.classList.add("float");
-      }, 700);
+        b.classList.add("visible");
+        b.classList.add("float");
+      }, 600);
 
       setTimeout(() => {
-        bubble.classList.add("shimmer");
-        setTimeout(() => bubble.classList.remove("shimmer"), 1400);
-      }, 850);
-    }, index * 180);
+        b.classList.add("shimmer");
+      }, 800);
+
+    }, i * 150);
   });
+
 }, 2500);
 
+/* ŞİFRE */
 function openModal(page, password) {
   currentPage = page;
   currentPassword = password;
-
-  const modal = document.getElementById("modal");
-  modal.style.display = "flex";
-
-  setTimeout(() => {
-    modal.classList.add("show");
-  }, 10);
-
-  setTimeout(() => {
-    document.getElementById("password").focus();
-  }, 150);
+  document.getElementById("modal").classList.add("show");
 }
 
 function closeModal() {
-  const modal = document.getElementById("modal");
-  modal.classList.remove("show");
-
-  setTimeout(() => {
-    modal.style.display = "none";
-    document.getElementById("password").value = "";
-    document.getElementById("error").innerText = "";
-  }, 250);
+  document.getElementById("modal").classList.remove("show");
 }
 
 function checkPassword() {
   const pass = document.getElementById("password").value;
-  const container = document.getElementById("container");
 
   if (pass === currentPassword) {
-    closeModal();
-    container.classList.add("zoom-out");
-
-    setTimeout(() => {
-      window.location.href = currentPage;
-    }, 650);
+    window.location.href = currentPage;
   } else {
     document.getElementById("error").innerText = "Yanlış şifre";
   }
 }
-
-document.getElementById("password").addEventListener("keydown", function(e) {
-  if (e.key === "Enter") {
-    checkPassword();
-  }
-});
 </script>
 
 </body>
