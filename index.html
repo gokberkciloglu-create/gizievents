@@ -93,12 +93,31 @@ html, body {
   user-select: none;
 }
 
+/* Balon kalıcı görünür hali */
 .bubble.visible {
   opacity: 1;
   transform: scale(1);
-  animation: float 3.4s ease-in-out infinite;
 }
 
+/* Hover */
+@media (hover: hover) {
+  .bubble.visible:hover {
+    transform: scale(1.045);
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.38);
+    box-shadow:
+      0 14px 38px rgba(0,0,0,0.12),
+      0 5px 14px rgba(0,0,0,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+}
+
+.bubble:active {
+  transform: scale(0.96);
+  background: rgba(255,255,255,0.16);
+}
+
+/* Shimmer */
 .bubble::after {
   content: "";
   position: absolute;
@@ -135,29 +154,18 @@ html, body {
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* Float transform'u bozmasın diye wrapper gibi hafif hareket container'a değil bubble'a translate ile veriyoruz */
+.bubble.float {
+  animation: float 3.4s ease-in-out infinite;
+}
+
 @keyframes float {
-  0% { translate: 0 0; }
-  50% { translate: 0 -6px; }
-  100% { translate: 0 0; }
+  0% { margin-top: 0; }
+  50% { margin-top: -6px; }
+  100% { margin-top: 0; }
 }
 
-@media (hover: hover) {
-  .bubble.visible:hover {
-    transform: scale(1.045);
-    background: rgba(255,255,255,0.14);
-    border-color: rgba(255,255,255,0.38);
-    box-shadow:
-      0 14px 38px rgba(0,0,0,0.12),
-      0 5px 14px rgba(0,0,0,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.35);
-  }
-}
-
-.bubble:active {
-  transform: scale(0.96);
-  background: rgba(255,255,255,0.16);
-}
-
+/* MODAL */
 .modal {
   position: fixed;
   inset: 0;
@@ -304,9 +312,10 @@ setTimeout(() => {
       bubble.style.animation = "pop 0.65s ease forwards";
 
       setTimeout(() => {
+        bubble.style.animation = "";
         bubble.classList.add("visible");
-        bubble.style.animationDelay = `${index * 0.18}s`;
-      }, 650);
+        bubble.classList.add("float");
+      }, 700);
 
       setTimeout(() => {
         bubble.classList.add("shimmer");
@@ -314,7 +323,7 @@ setTimeout(() => {
       }, 850);
     }, index * 180);
   });
-}, 3800);
+}, 2500);
 
 function openModal(page, password) {
   currentPage = page;
