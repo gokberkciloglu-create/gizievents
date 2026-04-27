@@ -1,29 +1,421 @@
-<!-- SADECE EKLENEN KISMI GÖSTERİYORUM -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gizi events</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1.2s ease, filter 1.2s ease, transform 1.2s ease;
+}
+
+.bg1 {
+  background-image: url("fur1.png");
+  z-index: 1;
+}
+
+.bg2 {
+  background-image: url("fur2.png");
+  z-index: 2;
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(1.05);
+}
+
+.container {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  opacity: 0;
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.container.show {
+  opacity: 1;
+}
+
+.container.zoom-out {
+  transform: scale(1.06);
+  opacity: 0;
+}
+
+.bubble {
+  position: relative;
+  overflow: hidden;
+  width: 260px;
+  padding: 14px 20px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(20,30,60,0.9);
+  font-size: 22px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow:
+    0 8px 25px rgba(0,0,0,0.08),
+    0 2px 8px rgba(0,0,0,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: 0.28s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.bubble.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (hover: hover) {
+  .bubble.visible:hover {
+    transform: scale(1.045);
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.38);
+    box-shadow:
+      0 14px 38px rgba(0,0,0,0.12),
+      0 5px 14px rgba(0,0,0,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+}
+
+.bubble:active {
+  transform: scale(0.96);
+  background: rgba(255,255,255,0.16);
+}
+
+@keyframes pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.bubble.float {
+  animation: float 3.4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+  100% { translate: 0 0; }
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -70%;
+  width: 55%;
+  height: 180%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255,255,255,0.08) 35%,
+    rgba(255,255,255,0.45) 50%,
+    rgba(255,255,255,0.08) 65%,
+    transparent 100%
+  );
+  transform: rotate(12deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bubble.shimmer::after {
+  animation: shimmer 1.35s ease forwards;
+}
+
+@keyframes shimmer {
+  0% { left: -70%; opacity: 0; }
+  18% { opacity: .75; }
+  100% { left: 120%; opacity: 0; }
+}
+
+.social-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 2px;
+}
+
+.social {
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.social img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: rgba(0,0,0,0.28);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.modal.show {
+  opacity: 1;
+}
+
+.modal-content {
+  position: relative;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  padding: 32px;
+  border-radius: 24px;
+  text-align: center;
+  width: 280px;
+  border: 1px solid rgba(255,255,255,0.24);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.16),
+    inset 0 1px 0 rgba(255,255,255,0.28);
+  transform: scale(.92);
+  transition: transform .28s ease;
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 20px;
+  color: rgba(20,30,60,0.75);
+}
+
+.modal-content h3 {
+  margin: 0 0 12px;
+  color: rgba(20,30,60,0.9);
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  margin-top: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.32);
+  background: rgba(255,255,255,0.35);
+  outline: none;
+  color: rgba(20,30,60,0.9);
+  text-align: center;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  color: rgba(20,30,60,0.9);
+  background: rgba(255,255,255,0.45);
+}
+
+.error {
+  color: #8a1f2d;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    justify-content: flex-start;
+    padding-top: 26vh;
+    height: calc(100% - 26vh);
+    gap: 14px;
+  }
+
+  .bubble {
+    width: 80%;
+    max-width: 300px;
+    font-size: 20px;
+    padding: 13px 22px;
+  }
+
+  .social-row {
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .social {
+    width: 54px;
+    height: 54px;
+  }
+
+  .social img {
+    width: 31px;
+    height: 31px;
+  }
+
+  .modal-content {
+    width: min(280px, 82vw);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg bg1"></div>
+<div class="bg bg2"></div>
 
 <div class="container" id="container">
-
-  <!-- ANA BALONLAR -->
   <div class="bubble" onclick="openModal('gamze.html','gamze123')">Gamze’s Bachelorette</div>
   <div class="bubble" onclick="openModal('zeynep.html','Ilovegoko123')">Zeynep’s Bridal Shower</div>
   <div class="bubble" onclick="openModal('elif.html','Ilovegoko123')">Elif’s Engagement Party</div>
   <div class="bubble" onclick="openModal('ayse.html','Ilovegoko123')">Ayşe’s Henna Night</div>
   <div class="bubble" onclick="openModal('derya.html','Ilovegoko123')">Derya’s Welcome Party</div>
 
-  <!-- 🔥 SOSYAL MEDYA BALONLARI -->
   <div class="social-row">
-
-    <a href="https://www.instagram.com/gizievents/" target="_blank" class="bubble social">
-      <img src="instagram.png">
+    <a class="bubble social" href="https://www.instagram.com/gizievents/" target="_blank">
+      <img src="instagram.png" alt="Instagram">
     </a>
 
-    <a href="https://www.tiktok.com/@gizi.events?_r=1&_t=ZS-95sxAtsV4gz" target="_blank" class="bubble social">
-      <img src="tiktok.png">
+    <a class="bubble social" href="https://www.tiktok.com/@gizi.events?_r=1&_t=ZS-95sxAtsV4gz" target="_blank">
+      <img src="tiktok.png" alt="TikTok">
     </a>
 
-    <a href="https://www.youtube.com/@gizievents" target="_blank" class="bubble social">
-      <img src="youtube.png">
+    <a class="bubble social" href="https://www.youtube.com/@gizievents" target="_blank">
+      <img src="youtube.png" alt="YouTube">
     </a>
-
   </div>
-
 </div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="close" onclick="closeModal()">✕</div>
+    <h3>Şifre Gir</h3>
+    <input type="password" id="password">
+    <button onclick="checkPassword()">Giriş</button>
+    <div class="error" id="error"></div>
+  </div>
+</div>
+
+<script>
+let currentPage = "";
+let currentPassword = "";
+
+setTimeout(() => {
+  const bg2 = document.querySelector(".bg2");
+  bg2.style.opacity = "1";
+  bg2.style.filter = "blur(0)";
+  bg2.style.transform = "scale(1)";
+}, 300);
+
+setTimeout(() => {
+  const container = document.getElementById("container");
+  const bubbles = document.querySelectorAll(".bubble");
+
+  container.classList.add("show");
+
+  bubbles.forEach((bubble, index) => {
+    setTimeout(() => {
+      bubble.style.animation = "pop 0.65s ease forwards";
+
+      setTimeout(() => {
+        bubble.style.animation = "";
+        bubble.classList.add("visible");
+        bubble.classList.add("float");
+      }, 700);
+
+      setTimeout(() => {
+        bubble.classList.add("shimmer");
+        setTimeout(() => bubble.classList.remove("shimmer"), 1400);
+      }, 850);
+
+    }, index * 180);
+  });
+}, 2500);
+
+function openModal(page, password) {
+  currentPage = page;
+  currentPassword = password;
+
+  const modal = document.getElementById("modal");
+  modal.style.display = "flex";
+
+  setTimeout(() => {
+    modal.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    document.getElementById("password").focus();
+  }, 150);
+}
+
+function closeModal() {
+  const modal = document.getElementById("modal");
+  modal.classList.remove("show");
+
+  setTimeout(() => {
+    modal.style.display = "none";
+    document.getElementById("password").value = "";
+    document.getElementById("error").innerText = "";
+  }, 250);
+}
+
+function checkPassword() {
+  const pass = document.getElementById("password").value;
+  const container = document.getElementById("container");
+
+  if (pass === currentPassword) {
+    closeModal();
+    container.classList.add("zoom-out");
+
+    setTimeout(() => {
+      window.location.href = currentPage;
+    }, 650);
+  } else {
+    document.getElementById("error").innerText = "Yanlış şifre";
+  }
+}
+
+document.getElementById("password").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    checkPassword();
+  }
+});
+</script>
+
+</body>
+</html>
