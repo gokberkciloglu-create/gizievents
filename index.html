@@ -7,7 +7,6 @@
 
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -50,12 +49,13 @@ html, body {
   gap: 18px;
   opacity: 0;
   transition: opacity .7s ease, transform .7s ease;
+}
 
-  @media (min-width: 769px) {
+@media (min-width: 769px) {
   .container {
-    transform: translateY(-60px);
+    height: calc(100% - 90px);
+    padding-bottom: 90px;
   }
-
 }
 
 .container.show {
@@ -90,6 +90,7 @@ html, body {
   transition: 0.28s;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  text-decoration: none;
 }
 
 .bubble.visible {
@@ -173,7 +174,6 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
 }
 
 .social img {
@@ -316,11 +316,9 @@ button {
     <a class="bubble social" href="https://www.instagram.com/gizievents/" target="_blank">
       <img src="instagram.png" alt="Instagram">
     </a>
-
     <a class="bubble social" href="https://www.tiktok.com/@gizi.events?_r=1&_t=ZS-95sxAtsV4gz" target="_blank">
       <img src="tiktok.png" alt="TikTok">
     </a>
-
     <a class="bubble social" href="https://www.youtube.com/@gizievents" target="_blank">
       <img src="youtube.png" alt="YouTube">
     </a>
