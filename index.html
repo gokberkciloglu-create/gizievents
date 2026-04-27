@@ -50,6 +50,12 @@ html, body {
   gap: 18px;
   opacity: 0;
   transition: opacity .7s ease, transform .7s ease;
+
+  @media (min-width: 769px) {
+  .container {
+    transform: translateY(-60px);
+  }
+
 }
 
 .container.show {
