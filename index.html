@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>gizi events</title>
 
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+<title>gizi events</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 
@@ -14,94 +12,72 @@
 html, body {
   margin: 0;
   height: 100%;
+  overflow: hidden;
+  font-family: "Cormorant Garamond", serif;
 }
 
-/* LOADING SCREEN */
-.loader {
+/* ARKA PLAN KATMANLARI */
+.bg {
   position: fixed;
   inset: 0;
-  background: #0f1a2b;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 0.8s ease;
+  background-size: cover;
+  background-position: center;
+  transition: 2s ease;
 }
 
-.loader h1 {
-  color: white;
-  font-size: 32px;
-  letter-spacing: 2px;
+.bg1 {
+  background-image: url("fur1.png");
+  z-index: 1;
+}
+
+.bg2 {
+  background-image: url("fur2.png");
+  z-index: 2;
   opacity: 0;
-  animation: fadeIn 1.2s forwards;
+  filter: blur(10px);
+  transform: scale(1.05);
 }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* MAIN */
-body {
-  font-family: "Cormorant Garamond", serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url("bg-desktop.png") center/cover no-repeat;
-}
-
-/* CONTAINER */
+/* BALONLAR */
 .container {
+  position: relative;
+  z-index: 3;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
+  opacity: 0;
 }
 
-/* BALON */
 .bubble {
   padding: 14px 28px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.07);
   backdrop-filter: blur(14px);
   border: 1px solid rgba(255,255,255,0.25);
-  color: rgba(30,42,68,0.9);
+  color: rgba(20,30,60,0.9);
   font-size: 22px;
   cursor: pointer;
-  text-align: center;
 
   box-shadow:
     0 8px 25px rgba(0,0,0,0.08),
     0 2px 8px rgba(0,0,0,0.05),
     inset 0 1px 0 rgba(255,255,255,0.25);
 
-  transition: 0.3s;
+  transform: scale(0.7);
+  opacity: 0;
 }
 
-.bubble:hover {
-  transform: scale(1.04);
-  background: rgba(255,255,255,0.14);
+/* ŞİŞME ANİMASYONU */
+@keyframes pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
 }
 
-.bubble:active {
-  transform: scale(0.96);
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  body {
-    background: url("bg-mobile.png") center/cover no-repeat;
-    align-items: flex-start;
-    padding-top: 26vh;
-  }
-
-  .bubble {
-    font-size: 20px;
-    padding: 13px 22px;
-    max-width: 82%;
-    background: rgba(255,255,255,0.07);
-  }
-}
-
-/* MODAL */
+/* MODAL (AYNI) */
 .modal {
   position: fixed;
   inset: 0;
@@ -125,95 +101,52 @@ body {
   position: absolute;
   top: 10px;
   right: 15px;
-  font-size: 20px;
   cursor: pointer;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: none;
-}
-
-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-}
-
-.error {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
-}
 </style>
 </head>
 
 <body>
 
-<!-- LOADING -->
-<div class="loader" id="loader">
-  <h1>gizi</h1>
-</div>
+<!-- ARKA PLAN -->
+<div class="bg bg1"></div>
+<div class="bg bg2"></div>
 
-<div class="container">
-  <div class="bubble" onclick="openModal('gamze.html','gamze123')">Gamze’s Bachelorette</div>
-  <div class="bubble" onclick="openModal('zeynep.html','Ilovegoko123')">Zeynep’s Bridal Shower</div>
-  <div class="bubble" onclick="openModal('elif.html','Ilovegoko123')">Elif’s Engagement Party</div>
-  <div class="bubble" onclick="openModal('ayse.html','Ilovegoko123')">Ayşe’s Henna Night</div>
-  <div class="bubble" onclick="openModal('derya.html','Ilovegoko123')">Derya’s Welcome Party</div>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <div class="close" onclick="closeModal()">✕</div>
-    <h3>Şifre Gir</h3>
-    <input type="password" id="password">
-    <button onclick="checkPassword()">Giriş</button>
-    <div class="error" id="error"></div>
-  </div>
+<!-- BALONLAR -->
+<div class="container" id="container">
+  <div class="bubble">Gamze’s Bachelorette</div>
+  <div class="bubble">Zeynep’s Bridal Shower</div>
+  <div class="bubble">Elif’s Engagement Party</div>
+  <div class="bubble">Ayşe’s Henna Night</div>
+  <div class="bubble">Derya’s Welcome Party</div>
 </div>
 
 <script>
-let currentPage = "";
-let currentPassword = "";
 
-/* LOADING */
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("loader").style.opacity = "0";
+/* 1️⃣ Tüy geçişi */
+setTimeout(() => {
+  const bg2 = document.querySelector(".bg2");
+  bg2.style.opacity = "1";
+  bg2.style.filter = "blur(0)";
+  bg2.style.transform = "scale(1)";
+}, 800);
+
+/* 2️⃣ Balonlar gelsin */
+setTimeout(() => {
+  const container = document.getElementById("container");
+  container.style.opacity = "1";
+
+  const bubbles = document.querySelectorAll(".bubble");
+
+  bubbles.forEach((b, i) => {
     setTimeout(() => {
-      document.getElementById("loader").style.display = "none";
-    }, 800);
-  }, 1200);
-});
+      b.style.animation = "pop 0.6s ease forwards";
+    }, i * 150);
+  });
 
-function openModal(page, password) {
-  currentPage = page;
-  currentPassword = password;
-  document.getElementById("modal").style.display = "flex";
-}
+}, 2200);
 
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
-  document.getElementById("password").value = "";
-  document.getElementById("error").innerText = "";
-}
-
-function checkPassword() {
-  const pass = document.getElementById("password").value;
-
-  if (pass === currentPassword) {
-    window.location.href = currentPage;
-  } else {
-    document.getElementById("error").innerText = "Yanlış şifre";
-  }
-}
 </script>
 
 </body>
